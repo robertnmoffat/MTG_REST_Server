@@ -1,15 +1,14 @@
 const express = require('express');
-
-import {HydratedDocument} from 'mongoose';
-const CardModel = require('../models/CardModel');
+import { Request, Response, NextFunction } from 'express';
+const { Model } = require('mongoose');
 const cardsController = require('../controllers/cardsController.js');
 
-function routes(CardModel: any){
+function routes(CardModel: typeof Model) {
     const cardRouter = express.Router();
-    const {getWithId, getWithSet} = cardsController(CardModel);
+    const { getWithId, getWithSet } = cardsController(CardModel);
 
     //middleware
-    cardRouter.use('/cards', (req:Express.Request,res:Express.Response, next:any) => {return next()});
+    cardRouter.use('/cards', (req: Request, res: Response, next: NextFunction) => { return next() });
 
     cardRouter.route('/cards/:set').get(getWithSet);
 

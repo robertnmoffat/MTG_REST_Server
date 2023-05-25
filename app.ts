@@ -29,7 +29,11 @@ async function connectToDB(): Promise<void> {
 
 connectToDB();
 
+
+//Pass requests on to cardRouter
 app.use('/api', cardRouter);
+
+
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}...`);
