@@ -68,7 +68,7 @@ An array of ten cards from the given set. The cards follow the structure defined
 An array of ten cards from the given set offset by the start parameter. The cards follow the structure defined above.<br><br>
 
 
-<b>`GET /cards`</b>
+<b>`GET /cards?id='id'`</b>
 
 <table>
   <tr>
