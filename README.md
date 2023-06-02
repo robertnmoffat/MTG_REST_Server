@@ -1,6 +1,6 @@
 # MTG Card Rest API
 
-This project is a REST API to request Magic the Gathering card information and randomized packs from specified sets.
+This project is a REST API to request Magic the Gathering card information and randomized packs from specified sets. Only Get requests are implemented as the card database should be static.
 
 ## Usage
 
