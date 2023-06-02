@@ -3,11 +3,13 @@ import { Request, Response, NextFunction } from 'express';
 const { Model } = require('mongoose');
 const packController = require('../controllers/packController');
 const cardsController = require('../controllers/cardsController.js');
+const setsController = require('../controllers/setsController');
 
 function routes(CardModel: typeof Model) {
     const cardRouter = express.Router();
     const { getWithId, getWithSet } = cardsController(CardModel);
     const {handleIncorrectPackRoute, getPackWithSet} = packController(CardModel);
+    const {getSets} = setsController(); 
 
     //middleware
     cardRouter.use('/cards', (req: Request, res: Response, next: NextFunction) => { return next() });
@@ -23,7 +25,7 @@ function routes(CardModel: typeof Model) {
 
     cardRouter.route('/packs').get(handleIncorrectPackRoute);
 
-    cardRouter.route('/sets').get();
+    cardRouter.route('/sets').get(getSets);
 
     return cardRouter;
 }
