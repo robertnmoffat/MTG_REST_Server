@@ -4,7 +4,7 @@ This project is a REST API to request Magic the Gathering card information and r
 
 ## Usage
 
-The API is currently hosted at [this address.](http://143.198.62.169:3000/api/)
+The API is currently hosted at [this address.](http://143.198.62.169:3333/api)
 
 ### Card Response Structure
 
