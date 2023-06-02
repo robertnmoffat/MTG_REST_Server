@@ -1,32 +1,13 @@
 import { Request, Response } from "express";
 const { Model } = require('mongoose');
 import { Card } from "models/Card";
+import { setNames } from "../data/supportedSets";
+import { cardFieldSelection } from "../data/cardFieldSelection";
 
 type ReqQuery = { q: string };//Defining so that req.query can be referenced
 type ReqParams = { set: string, start: string };
 type SelectedCard = { name: string };
 
-/**
- * Specifies the fields to be selected from database
- */
-const cardFieldSelection = {
-    _id: 0,
-    name: 1,
-    multiverse_ids: 1,
-    released_at: 1,
-    image_uris: 1,
-    mana_cost: 1,
-    cmc: 1,
-    type_line: 1,
-    oracle_text: 1,
-    power: 1,
-    toughness: 1,
-    colors: 1,
-    color_identity: 1,
-    set: 1,
-    set_name: 1,
-    rarity: 1
-}
 
 /**
  * Creates an object representing database data to be returned by API
@@ -35,7 +16,7 @@ const cardFieldSelection = {
  * @param res HTTP Response
  * @returns JSON object representing the card array with HATEOAS links
  */
-function createReturnObject(cards: [Card], req: Request<ReqParams>, res: Response) {
+function createReturnObject(cards: [Card], req: Request, res: Response) {
     const homeURL = req.protocol + '://' + req.get('host');
 
     const returnObj = {
@@ -86,7 +67,26 @@ function cardsController(CardModel: typeof Model) {
         }
     }
 
-    function getWithId(req: Request, res: Response) { }
+    /**
+     * Get's a card from the database using it's multiverse id
+     * @param req HTTP request
+     * @param res HTTP response
+     */
+    async function getWithId(req: Request, res: Response) {
+        if (req.query.id) {
+            const id = Number(req.query.id);
+
+            CardModel.findOne({ multiverse_ids: id }, cardFieldSelection)
+                .then((card: Card) => {
+                    res.send(card);
+                }).catch((err: Error) => {
+                    console.log(`Db return error:${err}`)
+                    res.send('Error');
+                });
+        } else {
+            res.send("Error: Card multiverse ID required.");
+        }
+    }
 
     return { getWithId, getWithSet };
 }
