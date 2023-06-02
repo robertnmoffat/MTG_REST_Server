@@ -43,22 +43,37 @@ function packController(CardModel: typeof Model) {
             return;
         }
 
+        let time: number = 0.0;
+        if (process.env.TEST == 'true')
+            time = performance.now();
+
         //Grab each card randomly to create a pack
         //1 mythic or rare, 3 uncommon, 10 common
         if (mythic) {
             pick = Math.floor(Math.random() * Number(cardCounts[position].mythic));
-            await CardModel.findOne({ set: setReq, rarity: 'mythic' }, cardFieldSelection).skip(pick).then((card: Card) => pack.push(card));
+            await CardModel.findOne({ set: setReq, rarity: 'mythic' }, cardFieldSelection).skip(pick).lean().then((card: Card) => pack.push(card))
+                .catch((err: Error) => console.log(`DB error: ${err}`));
         } else {
             pick = Math.floor(Math.random() * Number(cardCounts[position].rare));
-            await CardModel.findOne({ set: setReq, rarity: 'rare' }, cardFieldSelection).skip(pick).then((card: Card) => pack.push(card));
+            await CardModel.findOne({ set: setReq, rarity: 'rare' }, cardFieldSelection).skip(pick).lean().then((card: Card) => pack.push(card))
+                .catch((err: Error) => console.log(`DB error: ${err}`));
         }
         for (let i = 0; i < 3; i++) {
             pick = Math.floor(Math.random() * Number(cardCounts[position].uncommon));
-            await CardModel.findOne({ set: setReq, rarity: 'uncommon' }, cardFieldSelection).skip(pick).then((card: Card) => pack.push(card));
+            await CardModel.findOne({ set: setReq, rarity: 'uncommon' }, cardFieldSelection).skip(pick).lean().then((card: Card) => pack.push(card))
+                .catch((err: Error) => console.log(`DB error: ${err}`));
         }
         for (let i = 0; i < 10; i++) {
             pick = Math.floor(Math.random() * Number(cardCounts[position].common));
-            await CardModel.findOne({ set: setReq, rarity: 'common' }, cardFieldSelection).skip(pick).then((card: Card) => pack.push(card));
+            await CardModel.findOne({ set: setReq, rarity: 'common' }, cardFieldSelection).skip(pick).lean().then((card: Card) => pack.push(card))
+                .catch((err: Error) => console.log(`DB error: ${err}`));
+        }
+
+
+        let elapsed: number;
+        if (process.env.TEST == 'true') {
+            elapsed = performance.now() - time;
+            console.log(`Pack fetch completed in ${elapsed} milliseconds.`)
         }
 
         res.send(pack);

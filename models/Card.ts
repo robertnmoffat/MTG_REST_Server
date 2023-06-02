@@ -16,5 +16,6 @@ export interface Card {
     color_identity: [String],
     set: String,
     set_name: String,
-    rarity: String
+    rarity: String,
+    tags: { type: [String], index: true }
 };
