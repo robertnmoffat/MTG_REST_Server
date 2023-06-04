@@ -4,7 +4,7 @@ This project is a REST API to request Magic the Gathering card information and r
 
 ## Usage
 
-The API is currently hosted at [this address.](http://143.198.62.169:3333/api)
+The API is currently hosted on my server. [This link](http://143.198.62.169:3333/api/packs/bng) is an example route to generate a randomized pack of cards from the "Born of the Gods" set.
 
 ### Card Response Structure
 
