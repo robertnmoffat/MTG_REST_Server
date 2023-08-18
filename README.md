@@ -27,8 +27,11 @@ The API is currently hosted on my server. [This link](http://143.198.62.169:3333
     rarity: String
 }
 ```
+<hr>
 
 ### API Endpoints
+
+<br>
 
 <b>`GET /api/cards/:set`</b>
 
@@ -44,8 +47,9 @@ The API is currently hosted on my server. [This link](http://143.198.62.169:3333
 </table>
 
 <b>Returns:</b><br>
-An array of ten cards from the given set. The cards follow the structure defined above.<br><br>
-
+An array of ten cards from the given set. The cards follow the structure defined above.
+<hr>
+<br><br>
 
 <b>`GET /cards/:set/:start`</b>
 
@@ -65,8 +69,9 @@ An array of ten cards from the given set. The cards follow the structure defined
 </table>
 
 <b>Returns:</b><br>
-An array of ten cards from the given set offset by the start parameter. The cards follow the structure defined above.<br><br>
-
+An array of ten cards from the given set offset by the start parameter. The cards follow the structure defined above.
+<hr>
+<br><br>
 
 <b>`GET /cards?id='id'`</b>
 
@@ -109,6 +114,7 @@ Example:<br>
   "rarity":"common"
 }
 ```
+<hr>
 <br>
 
 <b>`GET /packs/:set`</b>
